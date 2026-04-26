@@ -1,0 +1,16 @@
+graph():
+    %p_module_weight : [num_users=2] = placeholder[target=p_module_weight]
+    %hidden_states : [num_users=2] = placeholder[target=hidden_states]
+    %_assert_tensor_metadata_default : [num_users=0] = call_function[target=torch.ops.aten._assert_tensor_metadata.default](args = (%hidden_states,), kwargs = {dtype: torch.float32, device: meta, layout: torch.strided})
+    %to : [num_users=3] = call_function[target=torch.ops.aten.to.dtype](args = (%hidden_states, torch.float32), kwargs = {})
+    %pow_1 : [num_users=1] = call_function[target=torch.ops.aten.pow.Tensor_Scalar](args = (%to, 2), kwargs = {})
+    %mean : [num_users=1] = call_function[target=torch.ops.aten.mean.dim](args = (%pow_1, [-1], True), kwargs = {})
+    %add : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%mean, 1e-06), kwargs = {})
+    %rsqrt : [num_users=1] = call_function[target=torch.ops.aten.rsqrt.default](args = (%add,), kwargs = {})
+    %mul : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%to, %rsqrt), kwargs = {})
+    %_assert_tensor_metadata_default_1 : [num_users=0] = call_function[target=torch.ops.aten._assert_tensor_metadata.default](args = (%p_module_weight,), kwargs = {dtype: torch.bfloat16, device: meta, layout: torch.strided})
+    %to_1 : [num_users=1] = call_function[target=torch.ops.aten.to.dtype](args = (%p_module_weight, torch.float32), kwargs = {})
+    %add_1 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%to_1, 1.0), kwargs = {})
+    %mul_1 : [num_users=1] = call_function[target=torch.ops.aten.mul.Tensor](args = (%mul, %add_1), kwargs = {})
+    %type_as : [num_users=1] = call_function[target=torch.ops.aten.type_as.default](args = (%mul_1, %to), kwargs = {})
+    return (type_as,)

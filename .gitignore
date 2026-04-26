@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Build / logs
+*.log
+*.out
+*.err
+
+# Large profiling artifacts
+*.nsys-rep
+*.qdstrm
+*.sqlite
+trace_*.json
+
+# Generated experiment outputs (keep structure, ignore contents)
+results/figures/*
+results/tables/*
+results/traces/*
+!results/figures/.gitkeep
+!results/tables/.gitkeep
+!results/traces/.gitkeep
+
+# Local notebooks/checkpoints
+.ipynb_checkpoints/

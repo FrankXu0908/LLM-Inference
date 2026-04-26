@@ -1,0 +1,23 @@
+torch_profiler:
+  enabled: true
+  output_dir: "results/traces/torch"
+  record_shapes: false
+  profile_memory: true
+  with_stack: true
+  with_flops: false
+  with_modules: true
+
+nsys_profiler:
+  enabled: true
+  output_dir: "results/traces/nsys"
+  trace: "cuda,nvtx,cudnn,cublas"
+  sample: "none"
+  capture_range: "cudaProfilerApi"
+  stats: true
+
+benchmark:
+  warmup_steps: 5
+  num_steps: 50
+  batch_sizes: [1, 2, 4, 8, 16, 32]
+  input_lengths: [128, 512, 1024]
+  output_lengths: [128, 512]
