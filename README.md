@@ -1,6 +1,74 @@
-# LLM Inference Analysis (Qwen3.5-35B-A3B-GPTQ-Int4)
+# LLM Inference Optimization Lab
 
-This repository contains benchmarking, profiling, and comparison scripts for vLLM inference experiments on Qwen3.5-35B-A3B-GPTQ-Int4.
+This repository is a measurement-driven inference optimization project.
+
+The primary project is now:
+
+- `Qwen3-8B` dense model
+- single-GPU and `DP=2` `NVIDIA GeForce RTX 4090` serving tracks
+- vLLM serving
+- optimization path from fixed baseline profiling to quantization, KV cache format, PCIe TP analysis, prefill/decode separation, and finally fusion decisions
+
+The previous `Qwen3.5-35B-A3B-GPTQ-Int4` parallel-strategy work is kept as a secondary case study.
+
+## Start Here
+
+Primary project:
+- `benchmark/projects/qwen3_8b_dense/README.md`
+- `benchmark/projects/qwen3_8b_dense/baseline_a_dp1_standard.md`
+- `benchmark/projects/qwen3_8b_dense/baseline_a_dp1_long_context.md`
+- `benchmark/projects/qwen3_8b_dense/baseline_b_dp2_standard.md`
+- `benchmark/projects/qwen3_8b_dense/baseline_b_dp2_long_context.md`
+- `benchmark/projects/qwen3_8b_dense/awq_marlin_dp1_standard.md`
+- `benchmark/projects/qwen3_8b_dense/awq_marlin_dp1_long_context.md`
+- `benchmark/projects/qwen3_8b_dense/quality_baseline_a_dp1_bf16.md`
+- `benchmark/projects/qwen3_8b_dense/optimization_plan.md`
+- `benchmark/projects/qwen3_8b_dense/request_rate_capacity_single_4090.md`
+
+Secondary case study:
+- `benchmark/case_studies/qwen3_5_a3b_parallel/README.md`
+- `benchmark/case_studies/qwen3_5_a3b_parallel/round1_round2_report.md`
+
+Profiling workflow:
+- `benchmark/analysis/README.md`
+- `benchmark/analysis/profiling/TRACING_WORKFLOW.md`
+
+Script map:
+- `scripts/README.md`
+
+## Current Main Roadmap
+
+1. Baseline benchmark matrix
+2. Nsight Systems + Nsight Compute / Roofline profile
+3. Weight quantization A/B
+4. KV cache FP8 A/B
+5. Optional `TP=1` vs `TP=2` PCIe communication analysis
+6. Prefill / decode disaggregation small experiment
+7. Decide whether QKV / FFN fusion is worth implementing
+
+## Repository Layout
+
+- `benchmark/projects/qwen3_8b_dense/`
+Primary Qwen3-8B dense optimization project.
+
+- `benchmark/case_studies/qwen3_5_a3b_parallel/`
+Secondary Qwen3.5-A3B parallel strategy analysis.
+
+- `benchmark/analysis/profiling/`
+Trace classification, trace organization, and post-processing tools.
+
+- `fx/`
+Model-scoped FX graph and operator analysis. Existing Qwen3.5-A3B graphs live under `fx/models/qwen3_5_35b_a3b/`; Qwen3-8B dense has its own planned workspace under `fx/models/qwen3_8b_dense/`.
+
+- `scripts/`
+Benchmark, plotting, profiling, and summarization scripts.
+
+- `configs/`
+Model and profiler configuration.
+Primary Qwen3-8B config: `configs/qwen3_8b_dense.yaml`.
+
+- `results/`
+Generated local outputs. Large generated artifacts are git-ignored by default.
 
 ## Environment
 
@@ -9,75 +77,13 @@ This repository contains benchmarking, profiling, and comparison scripts for vLL
 - `vllm`, `torch`, `transformers`, `httpx`, `matplotlib`
 
 Recommended:
+
 ```bash
 conda activate vllm
 ```
 
-## Project Focus
-
-This repo has one core narrative:
-1. Run controlled benchmarks for `tp2 / dp2 / dp2_ep`.
-2. Compare across TTFT / latency / throughput.
-3. Retest anomalies with repeated runs.
-4. Produce decision-oriented conclusions.
-
-If you are reviewing this repo for the first time, start from:
-- `benchmark/docs/project_compass.md`
-- `benchmark/docs/round1_round2_report.md`
-- `scripts/README.md`
-
-Track entry points:
-- Benchmark track: `benchmark/README.md`
-- FX track: `fx/README.md`
-
-## Main Scripts
-
-- `scripts/benchmark_vllm.py`
-Single benchmark run against OpenAI-compatible vLLM API.
-
-- `scripts/sweep_benchmark.py`
-Grid sweep across `(concurrency, input_tokens)`.
-
-- `scripts/sweep_compare_dp2_tp2.py`
-Compare sweep outputs of `tp2`, `dp2`, and `dp2_ep`.
-
-- `scripts/plot_compare_tp2_dp2_dp2ep.py`
-Generate heatmaps from comparison JSON.
-
-## Typical Workflow
-
-1. Start service in one mode (example: TP2 / DP2 / DP2+EP).
-```bash
-bash scripts/run_server.sh
-```
-2. Run sweep for that mode:
-```bash
-python scripts/sweep_benchmark.py --parallel-mode tp2
-python scripts/sweep_benchmark.py --parallel-mode dp2
-python scripts/sweep_benchmark.py --parallel-mode dp2_ep
-```
-3. Compare:
-```bash
-python scripts/sweep_compare_dp2_tp2.py
-```
-4. Plot:
-```bash
-python scripts/plot_compare_tp2_dp2_dp2ep.py
-```
-
-5. Anomaly retest (Round-2):
-```bash
-bash scripts/run_round2_retest_point.sh dp2
-bash scripts/run_round2_retest_point.sh dp2_ep
-```
-
-## Output Layout
-
-- `results/tables/<model>/<mode>/results.json`
-- `results/tables/<model>/compare_tp2_dp2_dp2ep.json`
-- `results/figures/<model>/compare/*.png`
-
 ## Notes
 
-- `benchmark_vllm.py` supports `--parallel-mode {tp2,dp2,dp2_ep,custom}` and auto-organizes output paths.
-- Large generated artifacts are git-ignored; placeholder `.gitkeep` files keep directory structure.
+- Keep benchmark conclusions tied to a specific model, hardware setup, and serving configuration.
+- Keep `Qwen3-8B` dense optimization results separate from `Qwen3.5-A3B` parallel-strategy results.
+- Treat fusion work as a final decision, not the starting point.

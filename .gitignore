@@ -32,6 +32,7 @@ trace_*.json
 results/figures/*
 results/tables/*
 results/traces/*
+results/eval/*
 !results/figures/.gitkeep
 !results/tables/.gitkeep
 !results/traces/.gitkeep

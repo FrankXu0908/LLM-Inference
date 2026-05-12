@@ -1,0 +1,11 @@
+model:
+  name: "/home/xuliren/repo/models/Qwen/Qwen3-8B"
+  short_name: "Qwen3-8B"
+  family: "Qwen3"
+  type: "dense decoder-only"
+
+fx:
+  graphs_dir: "fx/models/qwen3_8b_dense/fx_graphs"
+  artifacts_dir: "fx/models/qwen3_8b_dense/artifacts"
+  docs_dir: "fx/models/qwen3_8b_dense/docs"
+  status: "planned"

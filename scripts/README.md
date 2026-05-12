@@ -1,48 +1,55 @@
-# Scripts Map
+# Scripts
 
-This file defines which scripts are on the **main path** and which are legacy/auxiliary.
+This folder now keeps only thin entry points for the active project.
 
-## Main Path (active)
+## Serving
 
-- `benchmark_vllm.py`
-Single-run benchmark driver (OpenAI-compatible endpoint).
+- `run_server.sh`
+Starts vLLM from a YAML model config.
 
-- `sweep_benchmark.py`
-Grid sweep (`concurrency x input_tokens`) for one mode.
+```bash
+MODEL_CONFIG=configs/qwen3_8b_dense.yaml bash scripts/run_server.sh
+```
 
-- `sweep_compare_dp2_tp2.py`
-Compare `tp2`, `dp2`, `dp2_ep` sweep outputs.
+## Benchmark
 
-- `plot_compare_tp2_dp2_dp2ep.py`
-Generate heatmaps for Round-1 comparison.
+- `capture_vllm_metrics.sh`
+Captures `/metrics` once per second while a benchmark is running.
 
-- `run_round1_sweep.sh`
-Wrapper for full sweep per mode.
+```bash
+OUT=results/tables/Qwen3-8B/baseline_a_dp1_standard/c1_metrics.prom \
+bash scripts/capture_vllm_metrics.sh
+```
 
-- `run_round2_retest_point.sh`
-Wrapper for anomaly-point repeated retest.
+- `run_vllm_bench_request_rate.sh`
+Runs the request-rate sweep with vLLM's native benchmark client, `vllm bench serve`.
 
-- `compare_retest_point.py`
-Summarize Round-2 and generate Round1-vs-Round2 figure.
+```bash
+MODEL_CONFIG=configs/qwen3_8b_dense.yaml bash scripts/run_vllm_bench_request_rate.sh
+```
 
-## Secondary (useful but not required for main benchmark narrative)
+The benchmark path intentionally uses vLLM's native client instead of the old custom OpenAI-compatible benchmark script.
 
-- `sweep_scenarios.py`
-Scenario-oriented sweeps (dialog/RAG/ultra-long style inputs).
+- `run_vllm_bench_concurrency.sh`
+Runs burst-arrival max-concurrency sweeps with `vllm bench serve`.
 
-- `plot_results.py`
-Generic plotting for one sweep JSON.
+```bash
+RESULT_DIR=results/tables/Qwen3-8B/baseline_b_dp2_long_context \
+CONCURRENCIES="1 2 4 8" RANDOM_INPUT_LEN=8192 RANDOM_OUTPUT_LEN=256 NUM_PROMPTS=128 \
+SEED=42 TEMPERATURE=0 \
+bash scripts/run_vllm_bench_concurrency.sh
+```
 
-## Profiling / Deep Dive (separate track)
+- `plot_qwen3_8b_request_rate.py`
+Plots the curated Qwen3-8B request-rate result used in the project writeup.
 
-- `profile_*`
-- `summarize_*`
-- `plot_prefill_breakdown.py`
+## Profiling Helpers
 
-These are for deeper operator/runtime analysis and are not required for baseline TP/DP comparison reporting.
+- `profile_prefill_once_vllm.py`
+- `profile_decode_once_vllm.py`
+- `profile_execution_path_vllm.py`
+- `summarize_nsys_prefill.py`
+- `summarize_nsys_execution_path.py`
+- `summarize_tp_comm_critical_path.py`
 
-## Legacy / One-off
-
-- `run_vllm.py`, `run_transformers.py`, `run_profile.py`, `run_server.sh`
-
-Keep for reference unless they are explicitly integrated into the main path.
+These are for trace collection and post-processing. The structured profiling pipeline lives under `benchmark/analysis/profiling/`.

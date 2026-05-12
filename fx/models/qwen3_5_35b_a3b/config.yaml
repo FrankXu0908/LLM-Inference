@@ -1,0 +1,11 @@
+model:
+  name: "/home/xuliren/repo/models/Qwen/Qwen3.5-35B-A3B-GPTQ-Int4"
+  short_name: "Qwen3.5-35B-A3B"
+  family: "Qwen3.5-A3B"
+  type: "MoE / hybrid attention"
+
+fx:
+  graphs_dir: "fx/models/qwen3_5_35b_a3b/fx_graphs"
+  artifacts_dir: "fx/models/qwen3_5_35b_a3b/artifacts"
+  docs_dir: "fx/models/qwen3_5_35b_a3b/docs"
+  traced_layers: "exported layer-level submodules"

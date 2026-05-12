@@ -1,75 +1,66 @@
 # Project Compass
 
-## 1) Where We Are
+## Where We Are
 
-Current repository status:
-- We have a reproducible benchmark pipeline for vLLM OpenAI-compatible serving.
-- We completed a **Round-1 full sweep** comparing `tp2`, `dp2`, `dp2_ep`.
-- We completed a **Round-2 anomaly-point retest** for `c=16, input=256` with repeated runs.
-- We have comparison JSON and figures that support narrative conclusions.
+The repository has shifted from a broad collection of serving experiments into a focused inference optimization project.
 
-Primary evidence artifacts:
-- `results/tables/Qwen3.5-35B-A3B-GPTQ-Int4/compare_tp2_dp2_dp2ep.json`
-- `results/tables/Qwen3.5-35B-A3B-GPTQ-Int4/retest_c16_in256/retest_compare_summary.json`
-- `results/figures/Qwen3.5-35B-A3B-GPTQ-Int4/compare/*.png`
-- `benchmark/docs/round1_round2_report.md`
+Primary track:
+- `Qwen3-8B` dense model
+- single-GPU and `DP=2` RTX 4090 serving tracks
+- vLLM serving
+- fixed-baseline optimization and profiling workflow
 
-## 2) What This Project Is
+Completed evidence so far:
+- Baseline A / A-LC for the `DP=1` serving track.
+- Baseline B / B-LC for the `DP=2` serving track.
+- Single-card RTX 4090 request-rate capacity sweep for Qwen3-8B.
+- Qwen3.5-A3B parallel-strategy case study retained as secondary evidence.
+- Trace organization and profiling post-processing tools.
 
-This is an **inference performance investigation project**, not a generic script dump.
+## Where We Are Going
 
-Core question:
-- Under realistic workloads, how do `TP2`, `DP2`, and `DP2+EP` compare on TTFT, latency, and throughput?
+The next work should proceed in this order:
 
-Core methodology:
-- Controlled benchmark runs
-- Grid sweeps
-- Outlier retesting
-- Structured comparison and plotting
+1. Keep the `DP=1` and `DP=2` baseline tracks fixed and reproducible.
+2. Collect Nsight Systems traces for representative baseline points.
+3. Use Nsight Compute / Roofline on selected hot kernels.
+4. Run weight quantization A/B within each relevant serving track.
+5. Run KV cache FP8 A/B on the long-context branches.
+6. Optionally compare `TP=1` vs `TP=2` and quantify PCIe communication cost.
+7. Run a small prefill/decode separation experiment.
+8. Decide whether QKV / FFN fusion is worth implementing.
 
-## 3) What This Project Is Not
+## What This Project Is
 
-- Not a production serving framework
-- Not a full model-training repo
-- Not a random collection of profiling logs
+This is a measurement-first inference optimization study.
 
-Any script outside the main path is auxiliary/legacy unless explicitly linked in `scripts/README.md`.
+The core question is:
+- Within a fixed serving configuration, which optimizations actually improve Qwen3-8B dense serving, and which ones only move bottlenecks around?
 
-## 4) Main Execution Path (for reviewers)
+The project uses `DP=1` and `DP=2` as separate serving tracks. Cross-track comparisons are context, not the central claim.
 
-1. Start vLLM service in one mode (`tp2` / `dp2` / `dp2_ep`)
-2. Run full sweep:
-   - `scripts/run_round1_sweep.sh <mode>`
-3. After all three modes:
-   - `scripts/sweep_compare_dp2_tp2.py`
-   - `scripts/plot_compare_tp2_dp2_dp2ep.py`
-4. Retest anomaly point:
-   - `scripts/run_round2_retest_point.sh dp2`
-   - `scripts/run_round2_retest_point.sh dp2_ep`
-5. Summarize:
-   - `benchmark/docs/round1_round2_report.md`
+## What This Project Is Not
 
-## 5) Where We Are Going (Next 2-3 Iterations)
+- Not a generic benchmark dump.
+- Not a production serving framework.
+- Not a fusion-first kernel project.
+- Not primarily about the old Qwen3.5-A3B MoE model anymore.
 
-### Iteration A: Reliability
-- Add automatic health checks before each benchmark batch.
-- Add retry-and-record for failed points (instead of hard stop or silent timeout).
-- Pin service startup presets per mode to avoid routing instability.
+## Reviewer Path
 
-### Iteration B: Measurement Quality
-- Add repeated runs for every sweep point (`n>=3`) and report median + variance.
-- Separate cold-start vs steady-state metrics explicitly.
-- Add confidence intervals to comparison plots.
+Start with:
+- `benchmark/projects/qwen3_8b_dense/README.md`
+- `benchmark/projects/qwen3_8b_dense/optimization_plan.md`
+- `benchmark/projects/qwen3_8b_dense/request_rate_capacity_single_4090.md`
 
-### Iteration C: Decision Readiness
-- Produce one-page “mode recommendation matrix” by workload segment:
-  - low concurrency short prompt
-  - high concurrency short prompt
-  - long context heavy load
-- Convert conclusions into deployment guidance.
+Then inspect:
+- `benchmark/analysis/profiling/TRACING_WORKFLOW.md`
+- `benchmark/case_studies/qwen3_5_a3b_parallel/README.md`
 
-## 6) Interviewer TL;DR
+## Interviewer TL;DR
 
-- We built a closed-loop workflow: **measure -> compare -> retest anomalies -> conclude**.
-- We validated that a major outlier needed retest and updated conclusions based on repeated runs.
-- We have a clear next roadmap focused on reliability and decision-quality metrics.
+The project now has a clear main arc:
+
+`baseline tracks -> profile -> same-track A/B optimize -> optional PCIe analysis -> test PD split -> decide fusion`.
+
+The older A3B work remains useful, but it is now supporting evidence rather than the headline.

@@ -1,0 +1,29 @@
+# configs/qwen3_8b_awq_marlin.yaml
+
+model: /home/xuliren/repo/models/Qwen/Qwen3-8B-AWQ
+served_model_name: Qwen3-8B-AWQ-Marlin
+
+dtype: half
+quantization: awq_marlin
+
+# Parallelism
+tensor_parallel_size: 1
+data_parallel_size: 1
+
+# Context
+max_model_len: 10000
+
+# Memory
+gpu_memory_utilization: 0.85
+
+# Runtime optimizations
+enforce_eager: false
+enable_prefix_caching: true
+enable_chunked_prefill: true
+
+# Server
+host: 0.0.0.0
+port: 8000
+
+# Scheduler
+max_num_seqs: 64
