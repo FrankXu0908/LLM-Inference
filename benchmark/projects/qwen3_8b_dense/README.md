@@ -18,11 +18,20 @@ This is the primary project in this repository.
 4. KV cache FP8 A/B
 5. Optional `TP=1` vs `TP=2` PCIe communication analysis
 6. Prefill / decode disaggregation small experiment
-7. Decide whether QKV / FFN fusion is worth implementing
+7. Attention-kernel backend study
+8. Decide whether QKV / FFN fusion is worth implementing
 
 ## Current Evidence
 
 Completed:
+- Optimization summary across BF16, AWQ-Marlin, and FP8 KV:
+  - `optimization_summary.md`
+  - `assets/optimization_summary_bf16_awq_fp8.png`
+  - `data/optimization_summary_bf16_awq_fp8.json`
+- AWQ-Marlin + FP8 KV combo performance:
+  - `awq_marlin_kv_fp8_combo.md`
+  - `assets/awq_marlin_kv_fp8_combo.png`
+  - `data/awq_marlin_kv_fp8_combo.json`
 - Baseline A: single GPU serving baseline:
   - `baseline_a_dp1_standard.md`
   - `assets/baseline_a_dp1_standard_concurrency.png`
@@ -50,13 +59,52 @@ Completed:
   - `awq_marlin_dp1_long_context.md`
   - `assets/awq_marlin_dp1_long_context_vs_baseline_a_lc.png`
   - `results/tables/Qwen3-8B/awq_marlin_dp1_long_context/awq_marlin_dp1_long_context_vs_baseline_a_lc_summary.json`
+- AWQ-Marlin DP=1 quality A/B:
+  - `awq_marlin_dp1_quality.md`
+  - `assets/awq_marlin_dp1_quality_vs_bf16.png`
+  - `data/awq_marlin_dp1_quality_vs_bf16.json`
+- Triton attention decode-heavy BF16 baseline:
+  - `triton_attn_decode_heavy.md`
+  - `assets/triton_attn_prefill_vs_decode_heavy.png`
+  - `data/triton_attn_prefill_vs_decode_heavy.json`
+- FP8 KV decode-heavy A/B under fixed Triton attention:
+  - `kv_fp8_decode_heavy.md`
+  - `assets/kv_fp8_decode_heavy_vs_bf16_triton.png`
+  - `data/kv_fp8_decode_heavy_vs_bf16_triton.json`
+- FP8 KV long-prefill A/B under fixed Triton attention:
+  - `kv_fp8_long_prefill.md`
+  - `assets/kv_fp8_long_prefill_vs_bf16_triton.png`
+  - `data/kv_fp8_long_prefill_vs_bf16_triton.json`
+- Triton attention integration context:
+  - `triton_fa1_integration_plan.md`
+  - `kernel_level_attention_analysis.md`
+  - `configs/qwen3_8b_dense_triton_attn.yaml`
+- FA1 to FA2 CUDA attention kernel study:
+  - `subprojects/fa1_fa2_attention_kernel/README.md`
+  - `subprojects/fa1_fa2_attention_kernel/experiment_matrix.md`
+  - `subprojects/fa1_fa2_attention_kernel/fa2_cuda_baseline_results.md`
+  - `subprojects/fa1_fa2_attention_kernel/fa1_vs_fa2_same_head_observations.md`
+- FA2 backend tuning plan:
+  - `subprojects/fa1_fa2_attention_kernel/fa2_backend_tuning_plan.md`
+  - Baseline dispatch observed for Qwen3-8B / RTX 4090 / BF16 / causal / head_dim=128:
+    `Flash_fwd_kernel_traits<128, 64, 64, 4, false, false, bf16>`
+  - Current experiments change one FA2 backend variable at a time: tile shape,
+    pipeline / stage control, or `BLOCK_N=128` regression check.
 
 In progress / next:
+- FA2 backend tuning from kernel-profile evidence:
+  - adjust tile parameters
+  - locate and adjust the real pipeline / staging control
+  - test the `BLOCK_N=128` hypothesis against the current `BN64` baseline
+- PD separation experiment for long-prefill prefill/decode interference.
+  - `pd_routing_experiment.md`
+  - `pd_routing_results.md`
+  - `assets/pd_routing_mixed_vs_routed.png`
+  - `data/pd_routing_mixed_vs_routed.json`
 - Trace collection standardization for Nsight Systems and Nsight Compute.
 - Weight quantization A/B inside each serving track:
   - Baseline B / B-LC for `DP=2`
-- KV cache FP8 A/B primarily on long-context branches:
-  - A-LC for single-GPU behavior
+- KV cache FP8 A/B remaining branches:
   - B-LC for DP=2 serving behavior
 
 ## Baseline Tracks

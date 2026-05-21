@@ -84,13 +84,28 @@ def _extract_kernels_from_sqlite(conn: sqlite3.Connection) -> List[Dict[str, Any
     if not select_cols:
         return out
 
+    string_ids: Dict[int, str] = {}
+    if "StringIds" in tables:
+        try:
+            string_ids = {
+                int(row[0]): str(row[1])
+                for row in conn.execute("SELECT id, value FROM StringIds").fetchall()
+            }
+        except Exception:
+            string_ids = {}
+
     df = pd.read_sql_query(f"SELECT {', '.join(select_cols)} FROM {kernel_table}", conn)
     for _, row in df.iterrows():
         start_ns = int(row[start_col]) if start_col and pd.notna(row[start_col]) else 0
         end_ns = int(row[end_col]) if end_col and pd.notna(row[end_col]) else start_ns
+        raw_name = row[name_col] if name_col and pd.notna(row[name_col]) else "Unknown"
+        try:
+            name = string_ids.get(int(raw_name), str(raw_name))
+        except Exception:
+            name = str(raw_name)
         out.append(
             {
-                "name": str(row[name_col]) if name_col and pd.notna(row[name_col]) else "Unknown",
+                "name": name,
                 "start_time_ns": start_ns,
                 "duration_ns": max(0, end_ns - start_ns),
                 "grid_size": "",
@@ -204,7 +219,7 @@ def parse_sqlite(path: Path) -> Dict[str, Any]:
 
 
 def _export_nsys_rep_to_sqlite(nsys_rep: Path) -> Path:
-    out_prefix = Path(tempfile.mkdtemp(prefix="nsys_export_")) / nsys_rep.stem
+    out_prefix = Path(tempfile.mkdtemp(prefix="nsys_export_")) / f"{nsys_rep.stem}.sqlite"
     cmd = [
         "nsys",
         "export",
@@ -215,7 +230,7 @@ def _export_nsys_rep_to_sqlite(nsys_rep: Path) -> Path:
         str(nsys_rep),
     ]
     subprocess.run(cmd, check=True)
-    sqlite_path = out_prefix.with_suffix(".sqlite")
+    sqlite_path = out_prefix
     if not sqlite_path.exists():
         raise RuntimeError(f"nsys export succeeded but sqlite not found: {sqlite_path}")
     return sqlite_path

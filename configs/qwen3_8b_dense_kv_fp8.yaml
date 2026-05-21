@@ -1,0 +1,39 @@
+# configs/qwen3_8b_dense_kv_fp8.yaml
+
+model: /home/xuliren/repo/models/Qwen/Qwen3-8B
+served_model_name: Qwen3-8B-BF16-KV-FP8
+
+dtype: bfloat16
+attention_backend: TRITON_ATTN
+
+# Parallelism
+tensor_parallel_size: 1
+data_parallel_size: 1
+
+# Context
+max_model_len: 10000
+
+# Memory
+gpu_memory_utilization: 0.95
+kv_cache_dtype: fp8
+
+# Do not set calculate_kv_scales here. In the current vLLM build this option is
+# deprecated, and with Triton attention it can trigger a non-1.0 q_scale path
+# that is not supported. vLLM will load checkpoint scales when available,
+# otherwise it defaults to 1.0.
+
+# Use the same Triton attention backend as the BF16 default-KV control. FA2 does
+# not support FP8 KV in this environment, and FlashInfer would introduce another
+# variable.
+
+# Runtime optimizations
+enforce_eager: false
+enable_prefix_caching: true
+enable_chunked_prefill: true
+
+# Server
+host: 0.0.0.0
+port: 8000
+
+# Scheduler
+max_num_seqs: 64

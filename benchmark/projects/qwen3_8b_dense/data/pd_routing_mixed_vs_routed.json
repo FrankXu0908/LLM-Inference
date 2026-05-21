@@ -1,0 +1,112 @@
+{
+  "experiment": "Qwen3-8B workload-level PD routing: mixed DP=2 vs routed DP=1 endpoints",
+  "setup": {
+    "model": "Qwen3-8B-AWQ",
+    "optimization": "AWQ-Marlin + FP8 KV",
+    "backend": "vLLM",
+    "a_long_prefill": "8192 input / 256 output, concurrency=4, prompts=128",
+    "b_decode_sensitive": "256 input / 8192 output, concurrency=8, prompts=32",
+    "mixed_baseline": "one DP=2 endpoint, A and B concurrent on same port",
+    "pd_routing": "two DP=1 endpoints, A->GPU0, B->GPU1, A and B concurrent"
+  },
+  "results": {
+    "b_only_ideal": {
+      "completed": 32,
+      "failed": 0,
+      "max_concurrency": 8,
+      "request_throughput": 0.10509139101417872,
+      "output_throughput": 860.9086751881521,
+      "p99_ttft_ms": 246.13286306004738,
+      "p99_itl_ms": 15.086985666712284,
+      "p99_tpot_ms": 9.285110805862997,
+      "p99_e2el_ms": 76187.23260054481
+    },
+    "mixed_baseline": {
+      "a_long_prefill": {
+        "completed": 128,
+        "failed": 0,
+        "max_concurrency": 4,
+        "request_throughput": 0.8903779530328874,
+        "output_throughput": 227.93675597641916,
+        "p99_ttft_ms": 2097.3906838108087,
+        "p99_itl_ms": 209.44895619759302,
+        "p99_tpot_ms": 18.711968987897112,
+        "p99_e2el_ms": 6454.345608506122,
+        "num_gpu_blocks": 28490,
+        "max_kv_usage_pct": 30.195794053662073,
+        "max_running": 10.0,
+        "max_waiting": 2.0
+      },
+      "b_decode_sensitive": {
+        "completed": 32,
+        "failed": 0,
+        "max_concurrency": 8,
+        "request_throughput": 0.09571625024576955,
+        "output_throughput": 784.1075220133441,
+        "p99_ttft_ms": 2479.6392746065976,
+        "p99_itl_ms": 20.925582156050314,
+        "p99_tpot_ms": 13.475327045529495,
+        "p99_e2el_ms": 112259.1648273298,
+        "num_gpu_blocks": 28490,
+        "max_kv_usage_pct": 30.195794053662073,
+        "max_running": 10.0,
+        "max_waiting": 2.0
+      }
+    },
+    "pd_routing": {
+      "a_long_prefill": {
+        "completed": 128,
+        "failed": 0,
+        "max_concurrency": 4,
+        "request_throughput": 0.6386024008255351,
+        "output_throughput": 163.48221461133699,
+        "p99_ttft_ms": 3998.5121932881884,
+        "p99_itl_ms": 257.07258948590606,
+        "p99_tpot_ms": 20.268124747297765,
+        "p99_e2el_ms": 7258.557172053261,
+        "num_gpu_blocks": 14699,
+        "max_kv_usage_pct": 14.369301945842972,
+        "max_running": 4.0,
+        "max_waiting": 3.0
+      },
+      "b_decode_sensitive": {
+        "completed": 32,
+        "failed": 0,
+        "max_concurrency": 8,
+        "request_throughput": 0.10525739813304989,
+        "output_throughput": 862.2686055059447,
+        "p99_ttft_ms": 370.0460881734034,
+        "p99_itl_ms": 15.147539552999662,
+        "p99_tpot_ms": 9.269969537858387,
+        "p99_e2el_ms": 76104.95273260109,
+        "num_gpu_blocks": 14707,
+        "max_kv_usage_pct": 28.722970216238274,
+        "max_running": 8.0,
+        "max_waiting": 0.0
+      }
+    }
+  },
+  "comparisons": {
+    "mixed_vs_ideal_b": {
+      "p99_itl_delta_pct": 38.69955614937866,
+      "p99_ttft_delta_pct": 907.4393332846645,
+      "output_throughput_delta_pct": -8.920940790615573
+    },
+    "routed_vs_ideal_b": {
+      "p99_itl_delta_pct": 0.40136504153367447,
+      "p99_ttft_delta_pct": 50.34403922044564,
+      "output_throughput_delta_pct": 0.15796452713121578
+    },
+    "routed_vs_mixed_b": {
+      "p99_itl_delta_pct": -27.61233861959734,
+      "p99_ttft_delta_pct": -85.07661610448913,
+      "output_throughput_delta_pct": 9.968158868302556,
+      "p99_e2el_delta_pct": -32.206022688961674
+    }
+  },
+  "notes": [
+    "This is workload-level routing, not KV-transfer-based disaggregated prefill/decode.",
+    "B-side decode-sensitive metrics are primary; A-side throughput is secondary.",
+    "Mixed baseline scraped one shared endpoint metrics file; routed mode has separate A/B metrics files."
+  ]
+}

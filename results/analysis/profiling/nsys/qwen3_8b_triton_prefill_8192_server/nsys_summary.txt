@@ -1,0 +1,7 @@
+NSight Systems Summary
+========================
+Source: results/traces/nsys/prefill/qwen3_8b_dp1_bf16_triton/baseline_prefill_8192_server/qwen3_8b__qwen3_8b_dp1_bf16_triton__prefill__server__baseline_prefill_8192_server.1.nsys-rep
+Kernels: 3288
+Memcpy ops: 88
+CUDA API calls: 5149
+GPU time: 2071.952 ms

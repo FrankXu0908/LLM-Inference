@@ -38,6 +38,7 @@ RESULT_DIR="${RESULT_DIR:-results/tables/Qwen3-8B/vllm_bench/concurrency}"
 VLLM_BIN="${VLLM_BIN:-vllm}"
 CAPTURE_METRICS="${CAPTURE_METRICS:-true}"
 METRICS_INTERVAL="${METRICS_INTERVAL:-1}"
+PROFILE="${PROFILE:-false}"
 
 readarray -t CFG < <(python - "$MODEL_CONFIG" <<'PY'
 import sys, yaml
@@ -83,6 +84,7 @@ echo "Sampling: temperature=${TEMPERATURE}, seed=${SEED}, random_range_ratio=0"
 echo "Concurrency sweep: ${CONCURRENCIES}"
 echo "Result dir: ${RESULT_DIR}"
 echo "Capture metrics: ${CAPTURE_METRICS}, interval=${METRICS_INTERVAL}s"
+echo "vLLM profile trigger: ${PROFILE}"
 
 for c in ${CONCURRENCIES}; do
   echo "===== concurrency=${c} ====="
@@ -122,6 +124,9 @@ for c in ${CONCURRENCIES}; do
     --result-dir "${RESULT_DIR}"
     --result-filename "c${c}_bench.json"
   )
+  if [[ "${PROFILE}" == "true" ]]; then
+    cmd+=(--profile)
+  fi
   "${cmd[@]}" | tee "${RESULT_DIR}/c${c}_bench.log"
   STATUS=${PIPESTATUS[0]}
   set -e

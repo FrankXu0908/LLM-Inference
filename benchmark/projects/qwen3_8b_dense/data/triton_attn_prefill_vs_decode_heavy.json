@@ -1,0 +1,173 @@
+{
+  "experiment": "Qwen3-8B BF16 DP=1 Triton attention prefill-heavy vs decode-heavy",
+  "setup": {
+    "hardware": "single RTX 4090",
+    "backend": "vLLM",
+    "attention_backend": "TRITON_ATTN",
+    "dtype": "bfloat16",
+    "tp": 1,
+    "dp": 1,
+    "concurrency": [
+      1,
+      2,
+      4,
+      8
+    ]
+  },
+  "cases": {
+    "prefill_heavy_8192_256": {
+      "result_dir": "results/tables/Qwen3-8B/baseline_a_dp1_long_context_triton_attn",
+      "rows": [
+        {
+          "concurrency": 1,
+          "request_throughput": 0.1747752195860807,
+          "output_throughput": 44.74245621403666,
+          "total_token_throughput": 1476.5010550632098,
+          "mean_ttft_ms": 1146.6703828907612,
+          "p99_ttft_ms": 1198.9801619999344,
+          "mean_tpot_ms": 17.93909359935465,
+          "p99_tpot_ms": 17.972236826236923,
+          "mean_itl_ms": 17.941293186967744,
+          "p99_itl_ms": 22.805418253847165,
+          "p99_e2el_ms": 5768.768665051175,
+          "max_kv_usage_pct": 20.861319636507314,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 528.2086131963651,
+          "max_running": 1.0,
+          "max_waiting": 0.0
+        },
+        {
+          "concurrency": 2,
+          "request_throughput": 0.2778832327742847,
+          "output_throughput": 71.13810759021689,
+          "total_token_throughput": 2347.5575504771577,
+          "mean_ttft_ms": 1646.1772521093962,
+          "p99_ttft_ms": 2182.62058783017,
+          "mean_tpot_ms": 21.764554096109222,
+          "p99_tpot_ms": 23.7903162295469,
+          "mean_itl_ms": 21.764555808305225,
+          "p99_itl_ms": 39.09682405297648,
+          "p99_e2el_ms": 7404.120812254259,
+          "max_kv_usage_pct": 41.722639273014615,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 1056.41722639273,
+          "max_running": 2.0,
+          "max_waiting": 1.0
+        },
+        {
+          "concurrency": 4,
+          "request_throughput": 0.4036515341324433,
+          "output_throughput": 103.33479273790549,
+          "total_token_throughput": 3410.048160350881,
+          "mean_ttft_ms": 2285.9490914214575,
+          "p99_ttft_ms": 3506.049495300833,
+          "mean_tpot_ms": 29.88030364200206,
+          "p99_tpot_ms": 33.422323317021615,
+          "mean_itl_ms": 29.88030474359497,
+          "p99_itl_ms": 287.38125859148573,
+          "p99_e2el_ms": 10931.000690025541,
+          "max_kv_usage_pct": 83.44527854602923,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 2112.83445278546,
+          "max_running": 4.0,
+          "max_waiting": 3.0
+        },
+        {
+          "concurrency": 8,
+          "request_throughput": 0.40661561034703847,
+          "output_throughput": 104.09359624884185,
+          "total_token_throughput": 3435.0886762117807,
+          "mean_ttft_ms": 11011.053222742248,
+          "p99_ttft_ms": 13395.53801758259,
+          "mean_tpot_ms": 32.9057413987415,
+          "p99_tpot_ms": 34.143580626443544,
+          "mean_itl_ms": 32.90574260710507,
+          "p99_itl_ms": 292.3080919463247,
+          "p99_e2el_ms": 21647.052107412896,
+          "max_kv_usage_pct": 83.4057684709601,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 2111.8340576847095,
+          "max_running": 4.0,
+          "max_waiting": 7.0
+        }
+      ]
+    },
+    "decode_heavy_256_8192": {
+      "result_dir": "results/tables/Qwen3-8B/baseline_a_dp1_triton_attn_short_prompt_long_output",
+      "rows": [
+        {
+          "concurrency": 1,
+          "request_throughput": 0.0070285687194846305,
+          "output_throughput": 57.57803495001809,
+          "total_token_throughput": 59.37734854220616,
+          "mean_ttft_ms": 52.925253438843356,
+          "p99_ttft_ms": 70.974802634737,
+          "mean_tpot_ms": 17.36333590466662,
+          "p99_tpot_ms": 17.36907616948964,
+          "mean_itl_ms": 17.36379968003661,
+          "p99_itl_ms": 21.751920469105237,
+          "p99_e2el_ms": 142325.04461542136,
+          "max_kv_usage_pct": 20.821809561438165,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 527.2082180956144,
+          "max_running": 1.0,
+          "max_waiting": 0.0
+        },
+        {
+          "concurrency": 2,
+          "request_throughput": 0.013065252401778766,
+          "output_throughput": 107.03054767537165,
+          "total_token_throughput": 110.37525229022702,
+          "mean_ttft_ms": 90.69233262289345,
+          "p99_ttft_ms": 115.34099085009075,
+          "mean_tpot_ms": 18.67734105573573,
+          "p99_tpot_ms": 18.688373760727302,
+          "mean_itl_ms": 18.677341085860203,
+          "p99_itl_ms": 23.32516198832308,
+          "p99_e2el_ms": 153149.5489637264,
+          "max_kv_usage_pct": 41.722639273014615,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 1056.41722639273,
+          "max_running": 2.0,
+          "max_waiting": 0.0
+        },
+        {
+          "concurrency": 4,
+          "request_throughput": 0.024233921366516135,
+          "output_throughput": 198.52428383450018,
+          "total_token_throughput": 204.7281677043283,
+          "mean_ttft_ms": 127.96380962754483,
+          "p99_ttft_ms": 175.42865708644968,
+          "mean_tpot_ms": 20.135355451741678,
+          "p99_tpot_ms": 20.140901730040177,
+          "mean_itl_ms": 20.135355476021775,
+          "p99_itl_ms": 25.715861774806395,
+          "p99_e2el_ms": 165079.69263157283,
+          "max_kv_usage_pct": 83.44527854602923,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 2112.83445278546,
+          "max_running": 4.0,
+          "max_waiting": 0.0
+        },
+        {
+          "concurrency": 8,
+          "request_throughput": 0.03556207399228414,
+          "output_throughput": 291.3245101447917,
+          "total_token_throughput": 300.42840108681645,
+          "mean_ttft_ms": 785.5234413436847,
+          "p99_ttft_ms": 2439.749684583221,
+          "mean_tpot_ms": 24.526588165345526,
+          "p99_tpot_ms": 30.77475759170394,
+          "mean_itl_ms": 24.526962495181454,
+          "p99_itl_ms": 27.85747179761529,
+          "p99_e2el_ms": 252295.18305591223,
+          "max_kv_usage_pct": 100.0,
+          "num_gpu_blocks": 2532,
+          "est_max_blocks": 2532.0,
+          "max_running": 8.0,
+          "max_waiting": 6.0
+        }
+      ]
+    }
+  }
+}

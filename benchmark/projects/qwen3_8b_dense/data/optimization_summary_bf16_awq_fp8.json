@@ -1,0 +1,182 @@
+{
+  "experiment": "Qwen3-8B optimization summary: BF16 vs AWQ-Marlin vs FP8 KV",
+  "scope": "single RTX 4090, vLLM, TP=1/DP=1 experiments collected so far",
+  "performance_summary": [
+    {
+      "optimization": "AWQ-Marlin weights",
+      "scenario": "standard serving",
+      "workload": "512 input / 256 output, c=16",
+      "control": "BF16 weights, default KV",
+      "treatment": "AWQ-Marlin weights, default KV",
+      "mechanism": "reduces weight bandwidth in decode-heavy generation",
+      "output_throughput_delta_pct": 95.05763140763987,
+      "p99_ttft_delta_pct": -0.9184468256807521,
+      "p99_itl_delta_pct": -65.20174042455712,
+      "key_capacity_change": "n/a"
+    },
+    {
+      "optimization": "AWQ-Marlin weights",
+      "scenario": "long-context serving",
+      "workload": "8192 input / 256 output, c=8",
+      "control": "BF16 weights, default KV",
+      "treatment": "AWQ-Marlin weights, default KV",
+      "mechanism": "reduces weight bandwidth, but long-prefill interference remains",
+      "output_throughput_delta_pct": 49.729543823966615,
+      "p99_ttft_delta_pct": -47.98356048955659,
+      "p99_itl_delta_pct": 0.7085523923724191,
+      "key_capacity_change": "KV usage lower from smaller weights/headroom; ITL not improved at c=8"
+    },
+    {
+      "optimization": "FP8 KV cache",
+      "scenario": "long-prefill Triton branch",
+      "workload": "8192 input / 256 output, c=8",
+      "control": "BF16 weights, default KV, TRITON_ATTN",
+      "treatment": "BF16 weights, FP8 KV, TRITON_ATTN",
+      "mechanism": "doubles KV blocks; improves admission/running residency",
+      "output_throughput_delta_pct": 46.213374213426306,
+      "p99_ttft_delta_pct": -46.679843476034236,
+      "p99_itl_delta_pct": 1.1433010870693705,
+      "key_capacity_change": "GPU KV blocks 2532 -> 5064; running 4 -> 8; waiting still 7"
+    },
+    {
+      "optimization": "FP8 KV cache",
+      "scenario": "decode-heavy Triton branch",
+      "workload": "256 input / 8192 output, c=8",
+      "control": "BF16 weights, default KV, TRITON_ATTN",
+      "treatment": "BF16 weights, FP8 KV, TRITON_ATTN",
+      "mechanism": "removes KV-capacity admission bottleneck for long decode residency",
+      "output_throughput_delta_pct": 35.140299788873385,
+      "p99_ttft_delta_pct": -88.54486977652513,
+      "p99_itl_delta_pct": -6.4097673187174635,
+      "key_capacity_change": "GPU KV blocks 2532 -> 5064; KV usage 100.0% -> 83.4%; waiting 6 -> 0"
+    }
+  ],
+  "quality_summary": {
+    "bf16": {
+      "limit": null,
+      "model_args": {
+        "pretrained": "/home/xuliren/repo/models/Qwen/Qwen3-8B",
+        "tensor_parallel_size": 1,
+        "data_parallel_size": 1,
+        "dtype": "bfloat16",
+        "max_model_len": 10000,
+        "gpu_memory_utilization": 0.85,
+        "enable_prefix_caching": true,
+        "enable_chunked_prefill": true
+      },
+      "metrics": {
+        "arc_challenge_acc_norm": {
+          "value": 0.5639931740614335,
+          "stderr": 0.014491225699230916,
+          "samples": 1172
+        },
+        "hellaswag_acc_norm": {
+          "value": 0.7495518820952002,
+          "stderr": 0.004323856300539156,
+          "samples": 10042
+        },
+        "lambada_acc": {
+          "value": 0.6497186105181447,
+          "stderr": 0.006646350771961376,
+          "samples": 5153
+        },
+        "lambada_perplexity": {
+          "value": 4.594409656923997,
+          "stderr": 0.13868364245126802,
+          "samples": 5153
+        }
+      }
+    },
+    "awq_marlin": {
+      "limit": null,
+      "model_args": {
+        "pretrained": "/home/xuliren/repo/models/Qwen/Qwen3-8B-AWQ",
+        "tensor_parallel_size": 1,
+        "data_parallel_size": 1,
+        "dtype": "half",
+        "quantization": "awq_marlin",
+        "max_model_len": 10000,
+        "gpu_memory_utilization": 0.85,
+        "enable_prefix_caching": true,
+        "enable_chunked_prefill": true
+      },
+      "metrics": {
+        "arc_challenge_acc_norm": {
+          "value": 0.5477815699658704,
+          "stderr": 0.014544519880633832,
+          "samples": 1172,
+          "delta_abs_vs_bf16": -0.016211604095563104,
+          "delta_pct_vs_bf16": -2.874432677760963
+        },
+        "hellaswag_acc_norm": {
+          "value": 0.7359091814379606,
+          "stderr": 0.004399469168272441,
+          "samples": 10042,
+          "delta_abs_vs_bf16": -0.013642700657239604,
+          "delta_pct_vs_bf16": -1.8201142553474159
+        },
+        "lambada_acc": {
+          "value": 0.6266252668348535,
+          "stderr": 0.0067388918519784916,
+          "samples": 5153,
+          "delta_abs_vs_bf16": -0.02309334368329119,
+          "delta_pct_vs_bf16": -3.5543608124253168
+        },
+        "lambada_perplexity": {
+          "value": 5.195596383736472,
+          "stderr": 0.16590910983133064,
+          "samples": 5153,
+          "delta_abs_vs_bf16": 0.6011867268124753,
+          "delta_pct_vs_bf16": 13.08517898282009
+        }
+      }
+    },
+    "fp8_kv_sanity": {
+      "limit": 100.0,
+      "model_args": {
+        "pretrained": "/home/xuliren/repo/models/Qwen/Qwen3-8B",
+        "dtype": "bfloat16",
+        "max_model_len": 10000,
+        "gpu_memory_utilization": 0.95,
+        "kv_cache_dtype": "fp8",
+        "enable_prefix_caching": true,
+        "enable_chunked_prefill": true
+      },
+      "metrics": {
+        "arc_challenge_acc_norm": {
+          "value": 0.5,
+          "stderr": 0.050251890762960605,
+          "samples": 100,
+          "delta_abs_vs_bf16": -0.06399317406143346,
+          "delta_pct_vs_bf16": -11.346444780635402
+        },
+        "hellaswag_acc_norm": {
+          "value": 0.67,
+          "stderr": 0.04725815626252609,
+          "samples": 100,
+          "delta_abs_vs_bf16": -0.07955188209520014,
+          "delta_pct_vs_bf16": -10.613258934502456
+        },
+        "lambada_acc": {
+          "value": 0.65,
+          "stderr": 0.0479372485441102,
+          "samples": 100,
+          "delta_abs_vs_bf16": 0.00028138948185529866,
+          "delta_pct_vs_bf16": 0.04330943847072888
+        },
+        "lambada_perplexity": {
+          "value": 4.475323123831249,
+          "stderr": 0.8991200233347691,
+          "samples": 100,
+          "delta_abs_vs_bf16": -0.11908653309274797,
+          "delta_pct_vs_bf16": -2.5919876977726353
+        }
+      }
+    }
+  },
+  "notes": [
+    "AWQ quality uses full lm-eval task sizes and is comparable to BF16 full baseline.",
+    "FP8 KV quality is a limit=100 sanity check with large stderr; use it only as a smoke test, not a final quality claim.",
+    "FP8 KV performance comparisons use fixed TRITON_ATTN control/treatment pairs."
+  ]
+}

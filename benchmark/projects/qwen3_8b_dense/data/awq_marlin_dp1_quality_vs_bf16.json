@@ -1,0 +1,146 @@
+{
+  "experiment": "Qwen3-8B AWQ-Marlin DP=1 quality vs BF16 baseline",
+  "bf16_result": "results/eval/qwen3_8b/baseline_a_dp1_bf16/results_2026-05-11T23-20-17.119348.json",
+  "awq_result": "results/eval/qwen3_8b/awq_marlin_dp1/results_2026-05-12T21-07-58.800314.json",
+  "bf16_config": {
+    "model": "vllm",
+    "model_args": {
+      "pretrained": "/home/xuliren/repo/models/Qwen/Qwen3-8B",
+      "tensor_parallel_size": 1,
+      "data_parallel_size": 1,
+      "dtype": "bfloat16",
+      "max_model_len": 10000,
+      "gpu_memory_utilization": 0.85,
+      "enable_prefix_caching": true,
+      "enable_chunked_prefill": true
+    },
+    "batch_size": "auto",
+    "batch_sizes": [],
+    "device": "cuda:0",
+    "use_cache": null,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": {},
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "awq_config": {
+    "model": "vllm",
+    "model_args": {
+      "pretrained": "/home/xuliren/repo/models/Qwen/Qwen3-8B-AWQ",
+      "tensor_parallel_size": 1,
+      "data_parallel_size": 1,
+      "dtype": "half",
+      "quantization": "awq_marlin",
+      "max_model_len": 10000,
+      "gpu_memory_utilization": 0.85,
+      "enable_prefix_caching": true,
+      "enable_chunked_prefill": true
+    },
+    "batch_size": "auto",
+    "batch_sizes": [],
+    "device": "cuda:0",
+    "use_cache": null,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": {},
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "rows": [
+    {
+      "task": "arc_challenge",
+      "metric": "acc",
+      "direction": "higher",
+      "bf16": 0.5554607508532423,
+      "awq_marlin": 0.5366894197952219,
+      "bf16_stderr": 0.01452122640562708,
+      "awq_stderr": 0.014572000527756989,
+      "delta": -0.018771331058020424,
+      "relative_delta_pct": -3.3794162826420795,
+      "combined_stderr": 0.02057204938027398,
+      "delta_over_combined_stderr": -0.9124677231243563
+    },
+    {
+      "task": "arc_challenge",
+      "metric": "acc_norm",
+      "direction": "higher",
+      "bf16": 0.5639931740614335,
+      "awq_marlin": 0.5477815699658704,
+      "bf16_stderr": 0.014491225699230916,
+      "awq_stderr": 0.014544519880633832,
+      "delta": -0.016211604095563104,
+      "relative_delta_pct": -2.8744326777609617,
+      "combined_stderr": 0.02053140718080968,
+      "delta_over_combined_stderr": -0.789600242827768
+    },
+    {
+      "task": "hellaswag",
+      "metric": "acc",
+      "direction": "higher",
+      "bf16": 0.5715992830113523,
+      "awq_marlin": 0.5609440350527783,
+      "bf16_stderr": 0.0049383566159554105,
+      "awq_stderr": 0.004952576863315213,
+      "delta": -0.010655247958573977,
+      "relative_delta_pct": -1.8641114982578377,
+      "combined_stderr": 0.006993953363684643,
+      "delta_over_combined_stderr": -1.523494282060875
+    },
+    {
+      "task": "hellaswag",
+      "metric": "acc_norm",
+      "direction": "higher",
+      "bf16": 0.7495518820952002,
+      "awq_marlin": 0.7359091814379606,
+      "bf16_stderr": 0.004323856300539156,
+      "awq_stderr": 0.004399469168272441,
+      "delta": -0.013642700657239604,
+      "relative_delta_pct": -1.8201142553474172,
+      "combined_stderr": 0.006168554309584374,
+      "delta_over_combined_stderr": -2.2116528399599718
+    },
+    {
+      "task": "lambada_openai",
+      "metric": "acc",
+      "direction": "higher",
+      "bf16": 0.6497186105181447,
+      "awq_marlin": 0.6266252668348535,
+      "bf16_stderr": 0.006646350771961376,
+      "awq_stderr": 0.0067388918519784916,
+      "delta": -0.02309334368329119,
+      "relative_delta_pct": -3.554360812425314,
+      "combined_stderr": 0.009465022027265109,
+      "delta_over_combined_stderr": -2.439861588992408
+    },
+    {
+      "task": "lambada_openai",
+      "metric": "perplexity",
+      "direction": "lower",
+      "bf16": 4.594409656923997,
+      "awq_marlin": 5.195596383736472,
+      "bf16_stderr": 0.13868364245126802,
+      "awq_stderr": 0.16590910983133064,
+      "delta": 0.6011867268124753,
+      "relative_delta_pct": 13.085178982820086,
+      "combined_stderr": 0.21623826074165434,
+      "delta_over_combined_stderr": 2.780205153105302
+    }
+  ],
+  "interpretation": {
+    "summary": "AWQ-Marlin has clear serving-performance gains but introduces measurable quality regression on this lm-eval set.",
+    "notable_regressions": [
+      "hellaswag acc_norm",
+      "lambada_openai acc",
+      "lambada_openai perplexity"
+    ],
+    "less_conclusive": [
+      "arc_challenge acc",
+      "arc_challenge acc_norm"
+    ]
+  }
+}

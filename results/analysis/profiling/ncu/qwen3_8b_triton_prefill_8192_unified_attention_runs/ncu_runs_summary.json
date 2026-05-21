@@ -1,0 +1,655 @@
+{
+  "kernel": "kernel_unified_attention_2d",
+  "runs": [
+    {
+      "run": "run1",
+      "Memory Throughput": 16.39,
+      "DRAM Throughput": 1.67,
+      "Duration": 8.68,
+      "L1/TEX Cache Throughput": 60.41,
+      "L2 Cache Throughput": 87.84,
+      "Compute (SM) Throughput": 59.49,
+      "Executed Ipc Active": 1.21,
+      "Issue Slots Busy": 30.2,
+      "SM Busy": 30.2,
+      "Mem Busy": 87.84,
+      "Max Bandwidth": 87.66,
+      "L1/TEX Hit Rate": 5.89,
+      "L2 Hit Rate": 99.71,
+      "One or More Eligible": 30.19,
+      "No Eligible": 69.81,
+      "Active Warps Per Scheduler": 3.95,
+      "Eligible Warps Per Scheduler": 0.38,
+      "Warp Cycles Per Issued Instruction": 13.07,
+      "Warp Cycles Per Executed Instruction": 13.07,
+      "Avg. Active Threads Per Warp": 29.52,
+      "Avg. Not Predicated Off Threads Per Warp": 27.37,
+      "Block Size": 128.0,
+      "Grid Size": 16392.0,
+      "Registers Per Thread": 91.0,
+      "Shared Memory Configuration Size": 102.4,
+      "Dynamic Shared Memory Per Block": 21.76,
+      "Waves Per SM": 32.02,
+      "Theoretical Occupancy": 33.33,
+      "Achieved Occupancy": 32.89,
+      "Achieved Active Warps Per SM": 15.79,
+      "Branch Efficiency": 40.03,
+      "Avg. Divergent Branches": 99712.0
+    },
+    {
+      "run": "run2",
+      "Memory Throughput": 16.42,
+      "DRAM Throughput": 1.67,
+      "Duration": 8.66,
+      "L1/TEX Cache Throughput": 60.39,
+      "L2 Cache Throughput": 88.04,
+      "Compute (SM) Throughput": 59.62,
+      "Executed Ipc Active": 1.21,
+      "Issue Slots Busy": 30.18,
+      "SM Busy": 30.18,
+      "Mem Busy": 88.04,
+      "Max Bandwidth": 87.87,
+      "L1/TEX Hit Rate": 5.89,
+      "L2 Hit Rate": 99.71,
+      "One or More Eligible": 30.19,
+      "No Eligible": 69.81,
+      "Active Warps Per Scheduler": 3.95,
+      "Eligible Warps Per Scheduler": 0.38,
+      "Warp Cycles Per Issued Instruction": 13.07,
+      "Warp Cycles Per Executed Instruction": 13.07,
+      "Avg. Active Threads Per Warp": 29.52,
+      "Avg. Not Predicated Off Threads Per Warp": 27.37,
+      "Block Size": 128.0,
+      "Grid Size": 16392.0,
+      "Registers Per Thread": 91.0,
+      "Shared Memory Configuration Size": 102.4,
+      "Dynamic Shared Memory Per Block": 21.76,
+      "Waves Per SM": 32.02,
+      "Theoretical Occupancy": 33.33,
+      "Achieved Occupancy": 32.88,
+      "Achieved Active Warps Per SM": 15.78,
+      "Branch Efficiency": 40.03,
+      "Avg. Divergent Branches": 99712.0
+    },
+    {
+      "run": "run3",
+      "Memory Throughput": 16.38,
+      "DRAM Throughput": 1.67,
+      "Duration": 8.68,
+      "L1/TEX Cache Throughput": 60.41,
+      "L2 Cache Throughput": 87.79,
+      "Compute (SM) Throughput": 59.46,
+      "Executed Ipc Active": 1.21,
+      "Issue Slots Busy": 30.2,
+      "SM Busy": 30.2,
+      "Mem Busy": 87.79,
+      "Max Bandwidth": 87.62,
+      "L1/TEX Hit Rate": 5.89,
+      "L2 Hit Rate": 99.71,
+      "One or More Eligible": 30.19,
+      "No Eligible": 69.81,
+      "Active Warps Per Scheduler": 3.95,
+      "Eligible Warps Per Scheduler": 0.38,
+      "Warp Cycles Per Issued Instruction": 13.07,
+      "Warp Cycles Per Executed Instruction": 13.07,
+      "Avg. Active Threads Per Warp": 29.52,
+      "Avg. Not Predicated Off Threads Per Warp": 27.37,
+      "Block Size": 128.0,
+      "Grid Size": 16392.0,
+      "Registers Per Thread": 91.0,
+      "Shared Memory Configuration Size": 102.4,
+      "Dynamic Shared Memory Per Block": 21.76,
+      "Waves Per SM": 32.02,
+      "Theoretical Occupancy": 33.33,
+      "Achieved Occupancy": 32.89,
+      "Achieved Active Warps Per SM": 15.79,
+      "Branch Efficiency": 40.03,
+      "Avg. Divergent Branches": 99712.0
+    }
+  ],
+  "aggregate": {
+    "Duration": {
+      "median": 8.68,
+      "min": 8.66,
+      "max": 8.68,
+      "values": [
+        8.68,
+        8.66,
+        8.68
+      ],
+      "unit": "msecond"
+    },
+    "Memory Throughput": {
+      "median": 16.39,
+      "min": 16.38,
+      "max": 16.42,
+      "values": [
+        16.39,
+        16.42,
+        16.38
+      ],
+      "unit": "Gbyte/second"
+    },
+    "DRAM Throughput": {
+      "median": 1.67,
+      "min": 1.67,
+      "max": 1.67,
+      "values": [
+        1.67,
+        1.67,
+        1.67
+      ],
+      "unit": "%"
+    },
+    "L1/TEX Cache Throughput": {
+      "median": 60.41,
+      "min": 60.39,
+      "max": 60.41,
+      "values": [
+        60.41,
+        60.39,
+        60.41
+      ],
+      "unit": "%"
+    },
+    "L2 Cache Throughput": {
+      "median": 87.84,
+      "min": 87.79,
+      "max": 88.04,
+      "values": [
+        87.84,
+        88.04,
+        87.79
+      ],
+      "unit": "%"
+    },
+    "Compute (SM) Throughput": {
+      "median": 59.49,
+      "min": 59.46,
+      "max": 59.62,
+      "values": [
+        59.49,
+        59.62,
+        59.46
+      ],
+      "unit": "%"
+    },
+    "SM Busy": {
+      "median": 30.2,
+      "min": 30.18,
+      "max": 30.2,
+      "values": [
+        30.2,
+        30.18,
+        30.2
+      ],
+      "unit": "%"
+    },
+    "Mem Busy": {
+      "median": 87.84,
+      "min": 87.79,
+      "max": 88.04,
+      "values": [
+        87.84,
+        88.04,
+        87.79
+      ],
+      "unit": "%"
+    },
+    "Max Bandwidth": {
+      "median": 87.66,
+      "min": 87.62,
+      "max": 87.87,
+      "values": [
+        87.66,
+        87.87,
+        87.62
+      ],
+      "unit": "%"
+    },
+    "L1/TEX Hit Rate": {
+      "median": 5.89,
+      "min": 5.89,
+      "max": 5.89,
+      "values": [
+        5.89,
+        5.89,
+        5.89
+      ],
+      "unit": "%"
+    },
+    "L2 Hit Rate": {
+      "median": 99.71,
+      "min": 99.71,
+      "max": 99.71,
+      "values": [
+        99.71,
+        99.71,
+        99.71
+      ],
+      "unit": "%"
+    },
+    "Executed Ipc Active": {
+      "median": 1.21,
+      "min": 1.21,
+      "max": 1.21,
+      "values": [
+        1.21,
+        1.21,
+        1.21
+      ],
+      "unit": "inst/cycle"
+    },
+    "Issue Slots Busy": {
+      "median": 30.2,
+      "min": 30.18,
+      "max": 30.2,
+      "values": [
+        30.2,
+        30.18,
+        30.2
+      ],
+      "unit": "%"
+    },
+    "One or More Eligible": {
+      "median": 30.19,
+      "min": 30.19,
+      "max": 30.19,
+      "values": [
+        30.19,
+        30.19,
+        30.19
+      ],
+      "unit": "%"
+    },
+    "No Eligible": {
+      "median": 69.81,
+      "min": 69.81,
+      "max": 69.81,
+      "values": [
+        69.81,
+        69.81,
+        69.81
+      ],
+      "unit": "%"
+    },
+    "Active Warps Per Scheduler": {
+      "median": 3.95,
+      "min": 3.95,
+      "max": 3.95,
+      "values": [
+        3.95,
+        3.95,
+        3.95
+      ],
+      "unit": "warp"
+    },
+    "Eligible Warps Per Scheduler": {
+      "median": 0.38,
+      "min": 0.38,
+      "max": 0.38,
+      "values": [
+        0.38,
+        0.38,
+        0.38
+      ],
+      "unit": "warp"
+    },
+    "Warp Cycles Per Issued Instruction": {
+      "median": 13.07,
+      "min": 13.07,
+      "max": 13.07,
+      "values": [
+        13.07,
+        13.07,
+        13.07
+      ],
+      "unit": "cycle"
+    },
+    "Warp Cycles Per Executed Instruction": {
+      "median": 13.07,
+      "min": 13.07,
+      "max": 13.07,
+      "values": [
+        13.07,
+        13.07,
+        13.07
+      ],
+      "unit": "cycle"
+    },
+    "Avg. Active Threads Per Warp": {
+      "median": 29.52,
+      "min": 29.52,
+      "max": 29.52,
+      "values": [
+        29.52,
+        29.52,
+        29.52
+      ],
+      "unit": ""
+    },
+    "Avg. Not Predicated Off Threads Per Warp": {
+      "median": 27.37,
+      "min": 27.37,
+      "max": 27.37,
+      "values": [
+        27.37,
+        27.37,
+        27.37
+      ],
+      "unit": ""
+    },
+    "Block Size": {
+      "median": 128.0,
+      "min": 128.0,
+      "max": 128.0,
+      "values": [
+        128.0,
+        128.0,
+        128.0
+      ],
+      "unit": ""
+    },
+    "Grid Size": {
+      "median": 16392.0,
+      "min": 16392.0,
+      "max": 16392.0,
+      "values": [
+        16392.0,
+        16392.0,
+        16392.0
+      ],
+      "unit": ""
+    },
+    "Registers Per Thread": {
+      "median": 91.0,
+      "min": 91.0,
+      "max": 91.0,
+      "values": [
+        91.0,
+        91.0,
+        91.0
+      ],
+      "unit": "register/thread"
+    },
+    "Shared Memory Configuration Size": {
+      "median": 102.4,
+      "min": 102.4,
+      "max": 102.4,
+      "values": [
+        102.4,
+        102.4,
+        102.4
+      ],
+      "unit": "Kbyte"
+    },
+    "Dynamic Shared Memory Per Block": {
+      "median": 21.76,
+      "min": 21.76,
+      "max": 21.76,
+      "values": [
+        21.76,
+        21.76,
+        21.76
+      ],
+      "unit": "Kbyte/block"
+    },
+    "Waves Per SM": {
+      "median": 32.02,
+      "min": 32.02,
+      "max": 32.02,
+      "values": [
+        32.02,
+        32.02,
+        32.02
+      ],
+      "unit": ""
+    },
+    "Theoretical Occupancy": {
+      "median": 33.33,
+      "min": 33.33,
+      "max": 33.33,
+      "values": [
+        33.33,
+        33.33,
+        33.33
+      ],
+      "unit": "%"
+    },
+    "Achieved Occupancy": {
+      "median": 32.89,
+      "min": 32.88,
+      "max": 32.89,
+      "values": [
+        32.89,
+        32.88,
+        32.89
+      ],
+      "unit": "%"
+    },
+    "Achieved Active Warps Per SM": {
+      "median": 15.79,
+      "min": 15.78,
+      "max": 15.79,
+      "values": [
+        15.79,
+        15.78,
+        15.79
+      ],
+      "unit": "warp"
+    },
+    "Branch Efficiency": {
+      "median": 40.03,
+      "min": 40.03,
+      "max": 40.03,
+      "values": [
+        40.03,
+        40.03,
+        40.03
+      ],
+      "unit": "%"
+    },
+    "Avg. Divergent Branches": {
+      "median": 99712.0,
+      "min": 99712.0,
+      "max": 99712.0,
+      "values": [
+        99712.0,
+        99712.0,
+        99712.0
+      ],
+      "unit": ""
+    }
+  },
+  "rules_sample": [
+    {
+      "run": "run1",
+      "section": "SpeedOfLight",
+      "rule": "SOLBottleneck",
+      "estimated_speedup": "",
+      "description": "The kernel is utilizing greater than 80.0% of the available compute or memory performance of the device. To further improve performance, work will likely need to be shifted from the most utilized to another unit. Start by analyzing L2 in the Memory Workload Analysis section."
+    },
+    {
+      "run": "run1",
+      "section": "SpeedOfLight_RooflineChart",
+      "rule": "SOLFPRoofline",
+      "estimated_speedup": "",
+      "description": "The ratio of peak float (fp32) to double (fp64) performance on this device is 64:1. The kernel achieved 2% of this device's fp32 peak performance and 0% of its fp64 peak performance. See the Kernel Profiling Guide (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#roofline) for more details on roofline analysis."
+    },
+    {
+      "run": "run1",
+      "section": "ComputeWorkloadAnalysis",
+      "rule": "HighPipeUtilization",
+      "estimated_speedup": "",
+      "description": "Tensor is the highest-utilized pipeline (22.1%) based on active cycles, taking into account the rates of its different instructions. It is the logical aggregation of individual tensor pipelines. It's dominated by its Tensor (FP) sub-pipeline. It is well-utilized, but should not be a bottleneck."
+    },
+    {
+      "run": "run1",
+      "section": "MemoryWorkloadAnalysis_Tables",
+      "rule": "MemoryCacheAccessPattern",
+      "estimated_speedup": "8.038",
+      "description": "The memory access pattern for global loads from L2 might not be optimal. On average, only 28.9 of the 32 bytes transmitted per sector are utilized by each thread. This applies to the 94.1% of sectors missed in L1TEX. This could possibly be caused by a stride between threads. Check the Source Counters section for uncoalesced global loads."
+    },
+    {
+      "run": "run1",
+      "section": "MemoryWorkloadAnalysis_Tables",
+      "rule": "SharedMemoryConflicts",
+      "estimated_speedup": "9.775",
+      "description": "The memory access pattern for shared stores might not be optimal and causes on average a 1.2 - way bank conflict across all 59342848 shared store requests.This results in 11582524 bank conflicts,  which represent 16.18% of the overall 71580732 wavefronts for shared stores. Check the Source Counters section for uncoalesced shared stores."
+    },
+    {
+      "run": "run1",
+      "section": "SchedulerStats",
+      "rule": "IssueSlotUtilization",
+      "estimated_speedup": "12.16",
+      "description": "Every scheduler is capable of issuing one instruction per cycle, but for this kernel each scheduler only issues an instruction every 3.3 cycles. This might leave hardware resources underutilized and may lead to less optimal performance. Out of the maximum of 12 warps per scheduler, this kernel allocates an average of 3.95 active warps per scheduler, but only an average of 0.38 warps were eligible per cycle. Eligible warps are the subset of active warps that are ready to issue their next instruction. Every cycle with no eligible warp results in no instruction being issued and the issue slot remains unused. To increase the number of eligible warps, avoid possible load imbalances due to highly different execution durations per warp. Reducing stalls indicated on the Warp State Statistics and Source Counters sections can help, too."
+    },
+    {
+      "run": "run1",
+      "section": "InstructionStats",
+      "rule": "FPInstructions",
+      "estimated_speedup": "3.752",
+      "description": "This kernel executes 50528256 fused and 407633920 non-fused FP32 instructions. By converting pairs of non-fused instructions to their fused (https://docs.nvidia.com/cuda/floating-point/#cuda-and-floating-point), higher-throughput equivalent, the achieved FP32 performance could be increased by up to 44% (relative to its current performance). Check the Source page to identify where this kernel executes FP32 instructions."
+    },
+    {
+      "run": "run1",
+      "section": "Occupancy",
+      "rule": "TheoreticalOccupancy",
+      "estimated_speedup": "12.16",
+      "description": "The 4.00 theoretical warps per scheduler this kernel can issue according to its occupancy are below the hardware maximum of 12. This kernel's theoretical occupancy (33.3%) is limited by the required amount of shared memory."
+    },
+    {
+      "run": "run1",
+      "section": "SourceCounters",
+      "rule": "UncoalescedSharedAccess",
+      "estimated_speedup": "5.602",
+      "description": "This kernel has uncoalesced shared accesses resulting in a total of 67371008 excessive wavefronts (6% of the total 1184235520 wavefronts). Check the L1 Wavefronts Shared Excessive table for the primary source locations. The CUDA Best Practices Guide (https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab) has an example on optimizing shared memory accesses."
+    },
+    {
+      "run": "run2",
+      "section": "SpeedOfLight",
+      "rule": "SOLBottleneck",
+      "estimated_speedup": "",
+      "description": "The kernel is utilizing greater than 80.0% of the available compute or memory performance of the device. To further improve performance, work will likely need to be shifted from the most utilized to another unit. Start by analyzing L2 in the Memory Workload Analysis section."
+    },
+    {
+      "run": "run2",
+      "section": "SpeedOfLight_RooflineChart",
+      "rule": "SOLFPRoofline",
+      "estimated_speedup": "",
+      "description": "The ratio of peak float (fp32) to double (fp64) performance on this device is 64:1. The kernel achieved 2% of this device's fp32 peak performance and 0% of its fp64 peak performance. See the Kernel Profiling Guide (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#roofline) for more details on roofline analysis."
+    },
+    {
+      "run": "run2",
+      "section": "ComputeWorkloadAnalysis",
+      "rule": "HighPipeUtilization",
+      "estimated_speedup": "",
+      "description": "Tensor is the highest-utilized pipeline (22.0%) based on active cycles, taking into account the rates of its different instructions. It is the logical aggregation of individual tensor pipelines. It's dominated by its Tensor (FP) sub-pipeline. It is well-utilized, but should not be a bottleneck."
+    },
+    {
+      "run": "run2",
+      "section": "MemoryWorkloadAnalysis_Tables",
+      "rule": "MemoryCacheAccessPattern",
+      "estimated_speedup": "8.057",
+      "description": "The memory access pattern for global loads from L2 might not be optimal. On average, only 28.9 of the 32 bytes transmitted per sector are utilized by each thread. This applies to the 94.1% of sectors missed in L1TEX. This could possibly be caused by a stride between threads. Check the Source Counters section for uncoalesced global loads."
+    },
+    {
+      "run": "run2",
+      "section": "MemoryWorkloadAnalysis_Tables",
+      "rule": "SharedMemoryConflicts",
+      "estimated_speedup": "9.803",
+      "description": "The memory access pattern for shared stores might not be optimal and causes on average a 1.2 - way bank conflict across all 59342848 shared store requests.This results in 11627196 bank conflicts,  which represent 16.23% of the overall 71625404 wavefronts for shared stores. Check the Source Counters section for uncoalesced shared stores."
+    },
+    {
+      "run": "run2",
+      "section": "SchedulerStats",
+      "rule": "IssueSlotUtilization",
+      "estimated_speedup": "11.96",
+      "description": "Every scheduler is capable of issuing one instruction per cycle, but for this kernel each scheduler only issues an instruction every 3.3 cycles. This might leave hardware resources underutilized and may lead to less optimal performance. Out of the maximum of 12 warps per scheduler, this kernel allocates an average of 3.95 active warps per scheduler, but only an average of 0.38 warps were eligible per cycle. Eligible warps are the subset of active warps that are ready to issue their next instruction. Every cycle with no eligible warp results in no instruction being issued and the issue slot remains unused. To increase the number of eligible warps, avoid possible load imbalances due to highly different execution durations per warp. Reducing stalls indicated on the Warp State Statistics and Source Counters sections can help, too."
+    },
+    {
+      "run": "run2",
+      "section": "InstructionStats",
+      "rule": "FPInstructions",
+      "estimated_speedup": "3.751",
+      "description": "This kernel executes 50528256 fused and 407633920 non-fused FP32 instructions. By converting pairs of non-fused instructions to their fused (https://docs.nvidia.com/cuda/floating-point/#cuda-and-floating-point), higher-throughput equivalent, the achieved FP32 performance could be increased by up to 44% (relative to its current performance). Check the Source page to identify where this kernel executes FP32 instructions."
+    },
+    {
+      "run": "run2",
+      "section": "Occupancy",
+      "rule": "TheoreticalOccupancy",
+      "estimated_speedup": "11.96",
+      "description": "The 4.00 theoretical warps per scheduler this kernel can issue according to its occupancy are below the hardware maximum of 12. This kernel's theoretical occupancy (33.3%) is limited by the required amount of shared memory."
+    },
+    {
+      "run": "run2",
+      "section": "SourceCounters",
+      "rule": "UncoalescedSharedAccess",
+      "estimated_speedup": "5.617",
+      "description": "This kernel has uncoalesced shared accesses resulting in a total of 67371008 excessive wavefronts (6% of the total 1184235520 wavefronts). Check the L1 Wavefronts Shared Excessive table for the primary source locations. The CUDA Best Practices Guide (https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab) has an example on optimizing shared memory accesses."
+    },
+    {
+      "run": "run3",
+      "section": "SpeedOfLight",
+      "rule": "SOLBottleneck",
+      "estimated_speedup": "",
+      "description": "The kernel is utilizing greater than 80.0% of the available compute or memory performance of the device. To further improve performance, work will likely need to be shifted from the most utilized to another unit. Start by analyzing L2 in the Memory Workload Analysis section."
+    },
+    {
+      "run": "run3",
+      "section": "SpeedOfLight_RooflineChart",
+      "rule": "SOLFPRoofline",
+      "estimated_speedup": "",
+      "description": "The ratio of peak float (fp32) to double (fp64) performance on this device is 64:1. The kernel achieved 2% of this device's fp32 peak performance and 0% of its fp64 peak performance. See the Kernel Profiling Guide (https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#roofline) for more details on roofline analysis."
+    },
+    {
+      "run": "run3",
+      "section": "ComputeWorkloadAnalysis",
+      "rule": "HighPipeUtilization",
+      "estimated_speedup": "",
+      "description": "Tensor is the highest-utilized pipeline (22.1%) based on active cycles, taking into account the rates of its different instructions. It is the logical aggregation of individual tensor pipelines. It's dominated by its Tensor (FP) sub-pipeline. It is well-utilized, but should not be a bottleneck."
+    },
+    {
+      "run": "run3",
+      "section": "MemoryWorkloadAnalysis_Tables",
+      "rule": "MemoryCacheAccessPattern",
+      "estimated_speedup": "8.034",
+      "description": "The memory access pattern for global loads from L2 might not be optimal. On average, only 28.9 of the 32 bytes transmitted per sector are utilized by each thread. This applies to the 94.1% of sectors missed in L1TEX. This could possibly be caused by a stride between threads. Check the Source Counters section for uncoalesced global loads."
+    },
+    {
+      "run": "run3",
+      "section": "MemoryWorkloadAnalysis_Tables",
+      "rule": "SharedMemoryConflicts",
+      "estimated_speedup": "9.786",
+      "description": "The memory access pattern for shared stores might not be optimal and causes on average a 1.2 - way bank conflict across all 59342848 shared store requests.This results in 11597264 bank conflicts,  which represent 16.20% of the overall 71595472 wavefronts for shared stores. Check the Source Counters section for uncoalesced shared stores."
+    },
+    {
+      "run": "run3",
+      "section": "SchedulerStats",
+      "rule": "IssueSlotUtilization",
+      "estimated_speedup": "12.21",
+      "description": "Every scheduler is capable of issuing one instruction per cycle, but for this kernel each scheduler only issues an instruction every 3.3 cycles. This might leave hardware resources underutilized and may lead to less optimal performance. Out of the maximum of 12 warps per scheduler, this kernel allocates an average of 3.95 active warps per scheduler, but only an average of 0.38 warps were eligible per cycle. Eligible warps are the subset of active warps that are ready to issue their next instruction. Every cycle with no eligible warp results in no instruction being issued and the issue slot remains unused. To increase the number of eligible warps, avoid possible load imbalances due to highly different execution durations per warp. Reducing stalls indicated on the Warp State Statistics and Source Counters sections can help, too."
+    },
+    {
+      "run": "run3",
+      "section": "InstructionStats",
+      "rule": "FPInstructions",
+      "estimated_speedup": "3.752",
+      "description": "This kernel executes 50528256 fused and 407633920 non-fused FP32 instructions. By converting pairs of non-fused instructions to their fused (https://docs.nvidia.com/cuda/floating-point/#cuda-and-floating-point), higher-throughput equivalent, the achieved FP32 performance could be increased by up to 44% (relative to its current performance). Check the Source page to identify where this kernel executes FP32 instructions."
+    },
+    {
+      "run": "run3",
+      "section": "Occupancy",
+      "rule": "TheoreticalOccupancy",
+      "estimated_speedup": "12.21",
+      "description": "The 4.00 theoretical warps per scheduler this kernel can issue according to its occupancy are below the hardware maximum of 12. This kernel's theoretical occupancy (33.3%) is limited by the required amount of shared memory."
+    },
+    {
+      "run": "run3",
+      "section": "SourceCounters",
+      "rule": "UncoalescedSharedAccess",
+      "estimated_speedup": "5.599",
+      "description": "This kernel has uncoalesced shared accesses resulting in a total of 67371008 excessive wavefronts (6% of the total 1184235520 wavefronts). Check the L1 Wavefronts Shared Excessive table for the primary source locations. The CUDA Best Practices Guide (https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab) has an example on optimizing shared memory accesses."
+    }
+  ]
+}

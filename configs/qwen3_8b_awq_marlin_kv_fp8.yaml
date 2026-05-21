@@ -1,0 +1,38 @@
+# configs/qwen3_8b_awq_marlin_kv_fp8.yaml
+
+model: /home/xuliren/repo/models/Qwen/Qwen3-8B-AWQ
+served_model_name: Qwen3-8B-AWQ-Marlin-KV-FP8
+
+dtype: half
+quantization: awq_marlin
+attention_backend: TRITON_ATTN
+
+# Parallelism
+tensor_parallel_size: 1
+data_parallel_size: 1
+
+# Context
+max_model_len: 10000
+
+# Memory
+# Use 0.95 to match the BF16+FP8-KV Triton branch. This makes the combo test a
+# "best effort" optimized serving config, not a strict replay of the older
+# AWQ-only 0.85 run.
+gpu_memory_utilization: 0.95
+kv_cache_dtype: fp8
+
+# Do not set calculate_kv_scales. In this vLLM build the option is deprecated;
+# scales are loaded from the checkpoint when available, otherwise they default
+# to 1.0.
+
+# Runtime optimizations
+enforce_eager: false
+enable_prefix_caching: true
+enable_chunked_prefill: true
+
+# Server
+host: 0.0.0.0
+port: 8000
+
+# Scheduler
+max_num_seqs: 64

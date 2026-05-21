@@ -25,6 +25,12 @@ Primary project:
 - `benchmark/projects/qwen3_8b_dense/optimization_plan.md`
 - `benchmark/projects/qwen3_8b_dense/request_rate_capacity_single_4090.md`
 
+Current kernel subproject:
+- `benchmark/projects/qwen3_8b_dense/subprojects/fa1_fa2_attention_kernel/README.md`
+- `benchmark/projects/qwen3_8b_dense/subprojects/fa1_fa2_attention_kernel/fa2_cuda_baseline_results.md`
+- `benchmark/projects/qwen3_8b_dense/subprojects/fa1_fa2_attention_kernel/fa1_vs_fa2_same_head_observations.md`
+- `benchmark/projects/qwen3_8b_dense/subprojects/fa1_fa2_attention_kernel/fa2_backend_tuning_plan.md`
+
 Secondary case study:
 - `benchmark/case_studies/qwen3_5_a3b_parallel/README.md`
 - `benchmark/case_studies/qwen3_5_a3b_parallel/round1_round2_report.md`
@@ -44,7 +50,11 @@ Script map:
 4. KV cache FP8 A/B
 5. Optional `TP=1` vs `TP=2` PCIe communication analysis
 6. Prefill / decode disaggregation small experiment
-7. Decide whether QKV / FFN fusion is worth implementing
+7. Attention-kernel backend study
+   - completed: CUDA FA1 vs FA2 same-head comparison
+   - current: tune FA2 tile / pipeline parameters from profiling evidence
+   - validation targets: latency, SM utilization, DRAM traffic, occupancy, eligible warps, and stall reasons
+8. Decide whether QKV / FFN fusion is worth implementing
 
 ## Repository Layout
 
@@ -76,10 +86,6 @@ Generated local outputs. Large generated artifacts are git-ignored by default.
 - CUDA GPUs
 - `vllm`, `torch`, `transformers`, `httpx`, `matplotlib`
 
-Recommended:
-
-```bash
-conda activate vllm
 ```
 
 ## Notes
@@ -87,3 +93,4 @@ conda activate vllm
 - Keep benchmark conclusions tied to a specific model, hardware setup, and serving configuration.
 - Keep `Qwen3-8B` dense optimization results separate from `Qwen3.5-A3B` parallel-strategy results.
 - Treat fusion work as a final decision, not the starting point.
+- For kernel tuning, every claim should include the source diff, correctness check, latency result, and Nsight Compute evidence.

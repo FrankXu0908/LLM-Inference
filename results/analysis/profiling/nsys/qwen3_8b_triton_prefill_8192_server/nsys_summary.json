@@ -1,0 +1,214 @@
+{
+  "source_trace": "results/traces/nsys/prefill/qwen3_8b_dp1_bf16_triton/baseline_prefill_8192_server/qwen3_8b__qwen3_8b_dp1_bf16_triton__prefill__server__baseline_prefill_8192_server.1.nsys-rep",
+  "summary": {
+    "total_kernels": 3288,
+    "total_memory_ops": 88,
+    "total_api_calls": 5149,
+    "total_gpu_time_ns": 2071952495.0,
+    "total_memory_transfer_time_ns": 106944.0,
+    "kernel_stats": {
+      "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<int>, std::array<char *, (unsigned long)1>>(int, T2, T3)": {
+        "count": 8,
+        "total_duration_ns": 7552.0,
+        "avg_duration_ns": 944.0,
+        "max_duration_ns": 1088.0,
+        "min_duration_ns": 864.0
+      },
+      "void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void at::native::index_kernel_impl<at::native::OpaqueType<(int)4>>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>)::[lambda(char *, const char *, long) (instance 1)]>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>, const T1 &, bool)::[lambda(int) (instance 1)]>(long, T3)": {
+        "count": 8,
+        "total_duration_ns": 25856.0,
+        "avg_duration_ns": 3232.0,
+        "max_duration_ns": 3360.0,
+        "min_duration_ns": 3072.0
+      },
+      "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 4)]::operator ()() const::[lambda(long) (instance 1)], std::array<char *, (unsigned long)2>, (int)4, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T4, T5, T6, T7)": {
+        "count": 16,
+        "total_duration_ns": 28833.0,
+        "avg_duration_ns": 1802.0625,
+        "max_duration_ns": 2048.0,
+        "min_duration_ns": 1568.0
+      },
+      "void at::native::vectorized_elementwise_kernel<(int)2, at::native::CUDAFunctor_add<long>, std::array<char *, (unsigned long)3>>(int, T2, T3)": {
+        "count": 8,
+        "total_duration_ns": 10336.0,
+        "avg_duration_ns": 1292.0,
+        "max_duration_ns": 1344.0,
+        "min_duration_ns": 1216.0
+      },
+      "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctor_add<int>, std::array<char *, (unsigned long)3>>(int, T2, T3)": {
+        "count": 8,
+        "total_duration_ns": 9248.0,
+        "avg_duration_ns": 1156.0,
+        "max_duration_ns": 1184.0,
+        "min_duration_ns": 1088.0
+      },
+      "void at::native::unrolled_elementwise_kernel<at::native::FillFunctor<int>, std::array<char *, (unsigned long)1>, (int)4, TrivialOffsetCalculator<(int)0, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, T1, T2, T4, T5, T6, T7)": {
+        "count": 8,
+        "total_duration_ns": 6976.0,
+        "avg_duration_ns": 872.0,
+        "max_duration_ns": 896.0,
+        "min_duration_ns": 832.0
+      },
+      "_compute_slot_mapping_kernel": {
+        "count": 8,
+        "total_duration_ns": 29250.0,
+        "avg_duration_ns": 3656.25,
+        "max_duration_ns": 3745.0,
+        "min_duration_ns": 3488.0
+      },
+      "void at::native::unrolled_elementwise_kernel<at::native::CUDAFunctorOnSelf_add<int>, std::array<char *, (unsigned long)2>, (int)4, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithoutCast, at::native::memory::StoreWithoutCast>(int, T1, T2, T4, T5, T6, T7)": {
+        "count": 8,
+        "total_duration_ns": 7968.0,
+        "avg_duration_ns": 996.0,
+        "max_duration_ns": 1024.0,
+        "min_duration_ns": 928.0
+      },
+      "triton_red_fused__to_copy_embedding_rms_norm_0": {
+        "count": 8,
+        "total_duration_ns": 168480.0,
+        "avg_duration_ns": 21060.0,
+        "max_duration_ns": 23296.0,
+        "min_duration_ns": 19104.0
+      },
+      "ampere_bf16_s1688gemm_bf16_64x128_sliced1x2_ldg8_f2f_tn": {
+        "count": 576,
+        "total_duration_ns": 903088837.0,
+        "avg_duration_ns": 1567862.564236111,
+        "max_duration_ns": 2569922.0,
+        "min_duration_ns": 609128.0
+      },
+      "triton_red_fused_1": {
+        "count": 8,
+        "total_duration_ns": 145921.0,
+        "avg_duration_ns": 18240.125,
+        "max_duration_ns": 19104.0,
+        "min_duration_ns": 17888.0
+      },
+      "triton_poi_fused_2": {
+        "count": 8,
+        "total_duration_ns": 151427.0,
+        "avg_duration_ns": 18928.375,
+        "max_duration_ns": 20224.0,
+        "min_duration_ns": 18400.0
+      },
+      "reshape_and_cache_kernel_flash": {
+        "count": 288,
+        "total_duration_ns": 3781709.0,
+        "avg_duration_ns": 13130.934027777777,
+        "max_duration_ns": 13760.0,
+        "min_duration_ns": 10656.0
+      },
+      "kernel_unified_attention_2d": {
+        "count": 288,
+        "total_duration_ns": 585553842.0,
+        "avg_duration_ns": 2033173.0625,
+        "max_duration_ns": 3613038.0,
+        "min_duration_ns": 530535.0
+      },
+      "ampere_bf16_s1688gemm_bf16_128x64_sliced1x2_ldg8_f2f_tn": {
+        "count": 576,
+        "total_duration_ns": 488530012.0,
+        "avg_duration_ns": 848142.3819444445,
+        "max_duration_ns": 1308593.0,
+        "min_duration_ns": 402085.0
+      },
+      "triton_red_fused__to_copy_add_mean_mul_pow_rsqrt_0": {
+        "count": 288,
+        "total_duration_ns": 9314122.0,
+        "avg_duration_ns": 32340.70138888889,
+        "max_duration_ns": 38657.0,
+        "min_duration_ns": 29152.0
+      },
+      "triton_poi_fused_mul_silu_slice_1": {
+        "count": 288,
+        "total_duration_ns": 42110941.0,
+        "avg_duration_ns": 146218.54513888888,
+        "max_duration_ns": 147458.0,
+        "min_duration_ns": 145410.0
+      },
+      "triton_red_fused__to_copy_add_mean_mul_pow_rsqrt_2": {
+        "count": 288,
+        "total_duration_ns": 17280550.0,
+        "avg_duration_ns": 60001.90972222222,
+        "max_duration_ns": 62145.0,
+        "min_duration_ns": 48736.0
+      },
+      "triton_red_fused_3": {
+        "count": 280,
+        "total_duration_ns": 6590099.0,
+        "avg_duration_ns": 23536.067857142858,
+        "max_duration_ns": 24032.0,
+        "min_duration_ns": 22848.0
+      },
+      "triton_poi_fused_4": {
+        "count": 280,
+        "total_duration_ns": 4611425.0,
+        "avg_duration_ns": 16469.375,
+        "max_duration_ns": 17216.0,
+        "min_duration_ns": 15873.0
+      },
+      "void at::native::index_elementwise_kernel<(int)128, (int)4, void at::native::gpu_index_kernel<void at::native::index_kernel_impl<at::native::OpaqueType<(int)2>>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>)::[lambda(char *, const char *, long) (instance 1)]>(at::TensorIteratorBase &, c10::ArrayRef<long>, c10::ArrayRef<long>, const T1 &, bool)::[lambda(int) (instance 1)]>(long, T3)": {
+        "count": 8,
+        "total_duration_ns": 26784.0,
+        "avg_duration_ns": 3348.0,
+        "max_duration_ns": 3424.0,
+        "min_duration_ns": 3232.0
+      },
+      "std::enable_if<!T7, void>::type internal::gemvx::kernel<int, int, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, float, (bool)0, (bool)1, (bool)1, (bool)0, (int)6, (bool)0, cublasGemvParamsEx<int, cublasGemvTensorStridedBatched<const __nv_bfloat16>, cublasGemvTensorStridedBatched<const __nv_bfloat16>, cublasGemvTensorStridedBatched<__nv_bfloat16>, float>>(T13)": {
+        "count": 8,
+        "total_duration_ns": 10395014.0,
+        "avg_duration_ns": 1299376.75,
+        "max_duration_ns": 1299953.0,
+        "min_duration_ns": 1298896.0
+      },
+      "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 7)]::operator ()() const::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>, (int)4, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T4, T5, T6, T7)": {
+        "count": 8,
+        "total_duration_ns": 19136.0,
+        "avg_duration_ns": 2392.0,
+        "max_duration_ns": 2464.0,
+        "min_duration_ns": 2336.0
+      },
+      "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<float, at::native::ArgMaxOps<float>, unsigned int, long, (int)4, (int)4>>(T3)": {
+        "count": 8,
+        "total_duration_ns": 47297.0,
+        "avg_duration_ns": 5912.125,
+        "max_duration_ns": 6112.0,
+        "min_duration_ns": 5728.0
+      },
+      "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], std::array<char *, (unsigned long)2>, (int)4, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T4, T5, T6, T7)": {
+        "count": 8,
+        "total_duration_ns": 10880.0,
+        "avg_duration_ns": 1360.0,
+        "max_duration_ns": 1376.0,
+        "min_duration_ns": 1344.0
+      }
+    },
+    "memory_stats": {
+      "1": {
+        "count": 64,
+        "total_duration_ns": 81312.0,
+        "avg_duration_ns": 1270.5,
+        "total_size": 349832
+      },
+      "8": {
+        "count": 16,
+        "total_duration_ns": 16032.0,
+        "avg_duration_ns": 1002.0,
+        "total_size": 131104
+      },
+      "2": {
+        "count": 8,
+        "total_duration_ns": 9600.0,
+        "avg_duration_ns": 1200.0,
+        "total_size": 32
+      }
+    },
+    "api_stats": {
+      "runtime_api": {
+        "count": 5149,
+        "total_duration_ns": 2145615869.0,
+        "avg_duration_ns": 416705.3542435424
+      }
+    }
+  }
+}
